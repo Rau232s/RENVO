@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus — Cinematic AI Agents Experience</title>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+</head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2M6V79H761"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2M6V79H761');
+  </script>
+
+
+<link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/pricing.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/main.css">  
+  <link rel="stylesheet" href="css/cursor.css">
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#0a0a0c] text-[#f4f2ef] font-sans antialiased selection:bg-[#f5b8d0]/20 selection:text-white" style="margin:0; overflow-x:hidden;">
+<div class="custom-cursor"></div>
+<div class="cursor-follower"></div>
+  <canvas id="particlesBg" aria-hidden="true" style="position: fixed; inset: 0px; width: 1440px; height: 1024px; z-index: -1; pointer-events: none; display: block;" data-engine="three.js r160" width="2520" height="1792"></canvas>
+
+ <header class="w-full bg-neutral-950 border-b border-white/[0.06] sticky top-0 z-50">
+  <div class="max-w-[77.5rem] mx-auto px-6 py-4 flex items-center justify-between relative">
+    
+    <a href="#" class="flex items-center gap-2 no-underline cursor-pointer">
+      <span class="text-xl font-space font-bold tracking-tighter uppercase text-white">
+        <span class="font-bold text-[#3B82F6]">REN</span>VO
+      </span>
+    </a>
+
+    <button id="menu-btn" class="md:hidden text-white focus:outline-none p-2 z-50 cursor-pointer" aria-label="Abrir menú">
+      <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <div id="nav-menu" class="nav-menu flex-col md:flex-row items-center gap-6 absolute md:relative top-full left-0 w-full md:w-auto bg-neutral-950 md:bg-transparent p-6 md:p-0 border-b border-white/[0.06] md:border-none shadow-2xl md:shadow-none hidden md:flex">
+      <a href="#beneficios" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Beneficios</a>
+      <a href="#portafolio" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Portafolio</a>
+      <a href="#planes" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Planes</a>
+      <a href="#integration" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Mantenimiento</a>
+      
+      <a href="#contacto" class="text-sm font-normal px-4 py-1.5 rounded-full bg-[#ededed] text-[#1a1a1a] hover:bg-white transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.8),_0_2px_4px_rgba(0,0,0,0.1)] md:ml-4" style="will-change: transform; display: inline-flex; align-items: center;">
+        Cotizar Ahora
+      </a>
+    </div>
+
+  </div>
+</header>
+
+  <section id="hero" class="hero-section relative min-h-[85vh] flex items-center justify-center px-4 overflow-hidden">
+  
+  <canvas width="2880" height="2048" id="petalCanvas" class="absolute inset-0 w-full h-full z-0 opacity-85 pointer-events-none"></canvas>
+
+ <div class="relative z-10 max-w-4xl mx-auto text-center zoom-reveal">
+  <p class="text-xs uppercase tracking-[0.35rem] text-blue-500 mb-4 font-semibold">
+    AGENCIA DE DISEÑO Y DESARROLLO WEB PROFESIONAL
+  </p>
+  
+  <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight font-space">
+    Creamos <span class="text-blue-400">Páginas Web</span> que atraen y convierten <span class="text-blue-400">Clientes Nuevos</span>
+  </h1>
+  
+  <p class="text-base md:text-lg text-slate-300 max-w-xl mx-auto mb-8 font-light">
+    Diseñamos sitios rápidos, modernos y optimizados para Google que transforman visitantes en compradores desde el primer día.
+  </p>
+
+  <div class="flex flex-col sm:flex-row justify-center gap-4">
+    <a href="#planes" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-all shadow-lg shadow-blue-500/25">
+      Ver Planes y Precios
+    </a>
+    <a href="#contacto" class="px-8 py-3.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-medium rounded-full transition-all">
+      Cotizar Proyecto Gratis
+    </a>
+  </div>
+</div>
+
+</section>
+
+  <section class="pricing-section">
+  <div class="section-header zoom-reveal" id="planes">
+    <h2>Planes de Desarrollo Web</h2>
+    <p>Selecciona la solución ideal para impulsar tu modelo de negocio.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="pricing-card zoom-reveal float-element">
+      <div class="plan-badge">Inicial</div>
+      <h3>Plan Esencial</h3>
+      <div class="price">
+        <span class="currency">Bs</span>690
+        <span class="regular-price">Reg. Bs 890</span>
+      </div>
+      <p class="plan-desc">Ideal para profesionales independientes.</p>
+      <ul class="plan-features">
+        <li><i class="fa-solid fa-check"></i> Página web de 1 sección (Landing Page)</li>
+        <li><i class="fa-solid fa-check"></i> Adaptable a celulares</li>
+        <li><i class="fa-solid fa-check"></i> Botón WhatsApp + Formulario</li>
+        <li><i class="fa-solid fa-check"></i> Dominio .com + Hosting (1 año)</li>
+        <li><i class="fa-solid fa-check"></i> Certificado SSL y SEO Básico</li>
+        <li><i class="fa-solid fa-clock"></i> Entrega en 3-5 días</li>
+      </ul>
+      <div class="plan-actions">
+        <button class="btn-plan btn-demo-trigger" data-demos="demo.html, demo1.html, demo2.html">
+          <i class="fa-solid fa-eye"></i> Ver Demo
+        </button>
+        <a href="#contacto" class="btn-plan btn-primary">Solicitar Plan</a>
+      </div>
+    </div>
+
+    <div class="pricing-card featured zoom-reveal float-element">
+      <div class="plan-badge popular">Más Recomendado</div>
+      <h3>Plan Profesional</h3>
+      <div class="price">
+        <span class="currency">Bs</span>1.490
+      </div>
+      <p class="plan-desc">Perfecto para Pymes y negocios en expansión.</p>
+      <ul class="plan-features">
+        <li><i class="fa-solid fa-check"></i> Hasta 5 Páginas (Inicio, Nosotros, Servicios, Blog, Contacto)</li>
+        <li><i class="fa-solid fa-check"></i> Blog administrable y Panel editable</li>
+        <li><i class="fa-solid fa-check"></i> Optimización SEO Avanzada</li>
+        <li><i class="fa-solid fa-check"></i> Google Analytics + Search Console</li>
+        <li><i class="fa-solid fa-check"></i> Correos corporativos y Capacitación</li>
+        <li><i class="fa-solid fa-clock"></i> Entrega en 5-7 días</li>
+      </ul>
+      <div class="plan-actions">
+        <button class="btn-plan btn-demo-trigger" data-demos="https://rau232s.github.io/keravnos/,https://academy.iimacademy.qzz.io/ninoraul/ninoraul.html,https://rau232s.github.io/kitzune/">
+          <i class="fa-solid fa-eye"></i> Ver Demo
+        </button>
+        <a href="#contacto" class="btn-plan btn-primary">Solicitar Plan</a>
+      </div>
+    </div>
+
+    <div class="pricing-card zoom-reveal float-element">
+      <div class="plan-badge">Empresarial</div>
+      <h3>Plan Premium</h3>
+      <div class="price">
+        <span class="currency">Bs</span>2.790
+      </div>
+      <p class="plan-desc">Para empresas que requieren máximo potencial.</p>
+      <ul class="plan-features">
+        <li><i class="fa-solid fa-check"></i> Hasta 15 Páginas personalizadas</li>
+        <li><i class="fa-solid fa-check"></i> Sistema de Reservas y Agenda de Citas</li>
+        <li><i class="fa-solid fa-check"></i> Chat en vivo e Integración Pixel Meta</li>
+        <li><i class="fa-solid fa-check"></i> Ultra velocidad + Copias de seguridad</li>
+        <li><i class="fa-solid fa-check"></i> Soporte prioritario</li>
+        <li><i class="fa-solid fa-clock"></i> Entrega en 7-12 días</li>
+      </ul>
+      <div class="plan-actions">
+        <button class="btn-plan btn-demo-trigger" data-demos="https://academy.iimacademy.qzz.io/ninoraul/ninoraul.html,https://academy.iimacademy.qzz.io/index.html,https://rau232s.github.io/keravnos/">
+          <i class="fa-solid fa-eye"></i> Ver Demo
+        </button>
+        <a href="#contacto" class="btn-plan btn-primary">Solicitar Plan</a>
+      </div>
+    </div>
+
+    <div class="pricing-card zoom-reveal float-element">
+      <div class="plan-badge ecommerce">E-Commerce</div>
+      <h3>Tienda Online</h3>
+      <div class="price">
+        <span class="currency">Bs</span>3.990
+      </div>
+      <p class="plan-desc">Plataforma completa para vender productos online.</p>
+      <ul class="plan-features">
+        <li><i class="fa-solid fa-check"></i> Todo lo incluido en Plan Premium</li>
+        <li><i class="fa-solid fa-check"></i> Catálogo de productos + Carrito</li>
+        <li><i class="fa-solid fa-check"></i> Pasarela de pagos + Cupones</li>
+        <li><i class="fa-solid fa-check"></i> Gestión de pedidos e inventario</li>
+        <li><i class="fa-solid fa-check"></i> Panel de administración completo</li>
+      </ul>
+      <div class="plan-actions">
+        <button class="btn-plan btn-demo-trigger" data-demos="https://rau232s.github.io/kitzune/,https://academy.iimacademy.qzz.io/index.html,https://rau232s.github.io/ninoraul/ninoraul.html">
+          <i class="fa-solid fa-eye"></i> Ver Demo
+        </button>
+        <a href="#contacto" class="btn-plan btn-primary">Solicitar Plan</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="addons-section">
+    <div class="section-header zoom-reveal" id="mantenimiento">
+      <h2>Servicios Adicionales & Garantías</h2>
+    </div>
+
+    <div class="addons-grid zoom-reveal float-element">
+      <div class="addon-item"><span>Página adicional</span> <strong>Bs 90</strong></div>
+      <div class="addon-item"><span>Logo profesional</span> <strong>Bs 250</strong></div>
+      <div class="addon-item"><span>Redacción de contenido</span> <strong>Bs 180</strong></div>
+      <div class="addon-item"><span>SEO Avanzado</span> <strong>Bs 500</strong></div>
+      <div class="addon-item"><span>Google / Facebook Ads</span> <strong>Desde Bs 600</strong></div>
+      <div class="addon-item"><span>Correos corporativos extra</span> <strong>Bs 20/mes</strong></div>
+    </div>
+
+    <div class="guarantees-bar zoom-reveal">
+      <div class="guarantee-chip"><i class="fa-solid fa-shield"></i> Diseño Adaptable</div>
+      <div class="guarantee-chip"><i class="fa-solid fa-server"></i> Hosting & Dominio Incluido</div>
+      <div class="guarantee-chip"><i class="fa-solid fa-lock"></i> SSL Seguro</div>
+      <div class="guarantee-chip"><i class="fa-solid fa-headset"></i> Soporte Técnico</div>
+      <div class="guarantee-chip highlight"><i class="fa-solid fa-handshake"></i> Pago 50% inicio / 50% final</div>
+    </div>
+  </section>
+<section id="integration" class="mx-auto px-6 py-24 max-w-[77.5rem] relative text-center">
+  <div class="reveal-line overflow-hidden flex justify-center">
+    <p class="text-xs uppercase text-[#60a5fa]" style="letter-spacing:0.3rem; font-family: 'Sora', sans-serif; font-weight: 600;">Mantenimiento</p>
+  </div>
+
+  <div class="reveal-line overflow-hidden mt-3">
+    <h2 class="tracking-tight text-white" style="font-size:clamp(1.875rem,5vw,3.5rem); font-family: 'Space Grotesk', sans-serif; font-weight:700; line-height:1.05;">
+      Planes de Mantenimiento Mensual
+    </h2>
+  </div>
+
+  <div class="mt-4 flex justify-center">
+    <p class="text-sm md:text-base text-[#9c988f] max-w-xl" style="font-family: 'Sora', sans-serif;">Asegura un rendimiento óptimo y estabilidad continua para tu sitio web.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 text-left">
+    
+    <div class="fade-card flex flex-col justify-between transition-colors duration-500 bg-neutral-900 rounded-2xl px-8 py-10" style="transform-style: preserve-3d; border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(255, 255, 255, 0.03);">
+      <div>
+        <iconify-icon icon="solar:shield-check-linear" width="2.5rem" class="text-[#60a5fa] mb-6"></iconify-icon>
+        <h3 class="text-xl tracking-tight text-[#e8e6e3] mb-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700;">Mantenimiento Básico</h3>
+        <div class="text-2xl font-bold text-white mb-4" style="font-family: 'Sora', sans-serif;">Bs 100 <span class="text-sm font-normal text-[#9c988f]">/mes</span></div>
+        <p class="text-sm text-[#9c988f]" style="font-family: 'Sora', sans-serif;">Copias de seguridad, monitoreo de seguridad y pequeñas actualizaciones.</p>
+      </div>
+      <div class="mt-8">
+        <a href="#contacto" class="btn-plan inline-block w-full py-3 px-4 text-center rounded-xl">Elegir Plan</a>
+      </div>
+    </div>
+
+    <div class="fade-card flex flex-col justify-between transition-colors duration-500 bg-neutral-900 rounded-2xl px-8 py-10 relative" style="transform-style: preserve-3d; border: 1px solid var(--blue-accent, #3b82f6); background: rgba(255, 255, 255, 0.05); box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);">
+      <div>
+        <span class="absolute top-4 right-4 bg-[#3b82f6]/10 text-[#60a5fa] text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full" style="font-family: 'Sora', sans-serif;">Popular</span>
+        <iconify-icon icon="solar:rocket-2-linear" width="2.5rem" class="text-[#60a5fa] mb-6"></iconify-icon>
+        <h3 class="text-xl tracking-tight text-[#e8e6e3] mb-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700;">Mantenimiento Profesional</h3>
+        <div class="text-2xl font-bold text-white mb-4" style="font-family: 'Sora', sans-serif;">Bs 200 <span class="text-sm font-normal text-[#9c988f]">/mes</span></div>
+        <p class="text-sm text-[#9c988f]" style="font-family: 'Sora', sans-serif;">Todo el plan básico + hasta 2 cambios de contenido al mes y soporte prioritario.</p>
+      </div>
+      <div class="mt-8">
+        <a href="#contacto" class="btn-plan inline-block w-full py-3 px-4 text-center rounded-xl" style="background: var(--blue-accent, #3b82f6); border-color: var(--blue-accent, #3b82f6); color: #ffffff;">Elegir Plan</a>
+      </div>
+    </div>
+
+    <div class="fade-card flex flex-col justify-between transition-colors duration-500 bg-neutral-900 rounded-2xl px-8 py-10" style="transform-style: preserve-3d; border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(255, 255, 255, 0.03);">
+      <div>
+        <iconify-icon icon="solar:crown-linear" width="2.5rem" class="text-[#60a5fa] mb-6"></iconify-icon>
+        <h3 class="text-xl tracking-tight text-[#e8e6e3] mb-2" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700;">Mantenimiento Premium</h3>
+        <div class="text-2xl font-bold text-white mb-4" style="font-family: 'Sora', sans-serif;">Bs 350 <span class="text-sm font-normal text-[#9c988f]">/mes</span></div>
+        <p class="text-sm text-[#9c988f]" style="font-family: 'Sora', sans-serif;">Mantenimiento integral, optimización SEO mensual, reportes y cambios frecuentes.</p>
+      </div>
+      <div class="mt-8">
+        <a href="#contacto" class="btn-plan inline-block w-full py-3 px-4 text-center rounded-xl">Elegir Plan</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+  
+
+  
+
+  <footer class="mx-auto px-6 py-16 max-w-[77.5rem] border-t border-white/[0.06]">
+    <div class="flex flex-col md:flex-row justify-between gap-10">
+      <div>
+        <span class="text-sm font-medium tracking-tighter uppercase text-white">RENVO</span>
+        <p class="text-sm mt-4 text-[#7d7a73]" style="max-width:17.5rem;">Tecnología para crecer. Diseñamos soluciones digitales que ayudan a los negocios a atraer clientes, automatizar procesos y crecer.</p>
+      </div>
+      <div class="flex gap-16 text-sm text-[#9c988f]">
+        <div class="flex flex-col gap-3">
+          <span class="text-xs uppercase text-[#5c5a55] tracking-wider font-semibold">Servicios</span>
+          <a href="#" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Desarrollo Web</a>
+          <a href="#" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Landing Pages</a>
+          <a href="#" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Automatización</a>
+          <a href="#" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">IA</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <span class="text-xs uppercase text-[#5c5a55] tracking-wider font-semibold">Empresa</span>
+          <a href="#nosotros" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Nosotros</a>
+          <a href="#portafolio" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Portafolio</a>
+          <a href="#blog" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Blog</a>
+          <a href="#contacto" class="hover:text-white transition-colors" style="will-change: transform; display: inline-flex;">Contacto</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-16 pt-8 border-t border-white/[0.03] flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-[#5c5a55]">© 2026 Renvo. Todos los derechos reservados.</p>
+      <p class="text-xs text-[#5c5a55] italic">Construido para crecer.</p>
+    </div>
+  </footer>
+
+  <script src="js/canvas-petals.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/reveal.js"></script>
+  <script src="js/card-tilt.js"></script>
+  <script src="js/video-control.js"></script>
+  <script src="js/gsap-effects.js"></script>
+  <script type="module" src="js/three-bg.js"></script>
+
+</body>
+</html>

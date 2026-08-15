@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renvo — Agencia de Diseño y Desarrollo Web</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="pricing2.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/cursor.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2M6V79H761"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2M6V79H761');
+  </script>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#0a0a0c] text-[#f4f2ef] font-sans antialiased selection:bg-[#f5b8d0]/20 selection:text-white" style="margin:0; overflow-x:hidden;">
+
+<div class="custom-cursor"></div>
+<div class="cursor-follower"></div>
+<canvas id="particlesBg" aria-hidden="true" style="position: fixed; inset: 0px; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block;"></canvas>
+
+<header class="w-full bg-neutral-950 border-b border-white/[0.06] sticky top-0 z-50">
+  <div class="max-w-[77.5rem] mx-auto px-6 py-4 flex items-center justify-between relative">
+    
+    <a href="#" class="flex items-center gap-2 no-underline cursor-pointer">
+      <span class="text-xl font-space font-bold tracking-tighter uppercase text-white">
+        <span class="font-bold text-[#3B82F6]">REN</span>VO
+      </span>
+    </a>
+
+    <button id="menu-btn" class="md:hidden text-white focus:outline-none p-2 z-50 cursor-pointer" aria-label="Abrir menú">
+      <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <div id="nav-menu" class="nav-menu hidden flex-col md:flex-row items-center gap-6 absolute md:relative top-full left-0 w-full md:w-auto bg-neutral-950 md:bg-transparent p-6 md:p-0 border-b border-white/[0.06] md:border-none shadow-2xl md:shadow-none md:flex">
+      <a href="#benefits" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Beneficios</a>
+      <a href="#portafolio" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Portafolio</a>
+      <a href="#planes" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Planes</a>
+      <a href="#integration" class="nav-link text-sm text-[#9c988f] hover:text-white transition-colors">Mantenimiento</a>
+      
+      <a href="#contacto" class="text-sm font-normal px-4 py-1.5 rounded-full bg-[#ededed] text-[#1a1a1a] hover:bg-white transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.8),_0_2px_4px_rgba(0,0,0,0.1)] md:ml-4" style="display: inline-flex; align-items: center;">
+        Cotizar Ahora
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<section id="hero" class="hero-section relative min-h-[85vh] flex items-center justify-center px-4 overflow-hidden">
+  <canvas id="petalCanvas" class="absolute inset-0 w-full h-full z-0 opacity-85 pointer-events-none"></canvas>
+
+  <div class="relative z-10 max-w-4xl mx-auto text-center zoom-reveal px-2">
+    <p class="text-xs uppercase tracking-[0.2rem] md:tracking-[0.35rem] text-blue-500 mb-4 font-semibold">
+      AGENCIA DE DISEÑO Y DESARROLLO WEB PROFESIONAL
+    </p>
+    
+    <h1 class="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight font-space">
+      Creamos <span class="text-blue-400">Páginas Web</span> que atraen y convierten <span class="text-blue-400">Clientes Nuevos</span>
+    </h1>
+    
+    <p class="text-sm sm:text-base md:text-lg text-slate-300 max-w-xl mx-auto mb-8 font-light">
+      Diseñamos sitios rápidos, modernos y optimizados para Google que transforman visitantes en compradores desde el primer día.
+    </p>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#planes" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-all shadow-lg shadow-blue-500/25">
+        Ver Planes y Precios
+      </a>
+      <a href="#contacto" class="px-8 py-3.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-medium rounded-full transition-all">
+        Cotizar Proyecto Gratis
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="benefits" class="benefits-section py-24 px-6 md:px-12 bg-transparent">
+    <div class="max-w-6xl mx-auto">
+        
+        <!-- Cabecera de la Sección -->
+        <div class="section-header text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-blue-500 mb-3 block">
+                DISEÑO Y RENDIMIENTO SUPERIOR
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white font-space mb-4">
+                ¿Por qué tu negocio despega mejor con nosotros?
+            </h2>
+            <p class="text-slate-300 text-base md:text-lg">
+                Unimos diseño de alta gama, velocidad milimétrica y una estrategia orientada 100% a convertir visitantes en clientes reales.
+            </p>
+            
+            <!-- Indicador visual de deslizamiento (Solo visible en móviles) -->
+            <div class="flex items-center justify-center gap-2 mt-6 text-xs text-blue-400 font-medium md:hidden animate-pulse">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span>Desliza para ver más</span>
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </div>
+        </div>
+
+        <!-- Cuadrícula de Beneficios (Tarjetas con Blur y Ancho Controlado) -->
+        <div class="benefits-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            
+            <!-- Tarjeta 1 -->
+            <div class="benefit-card zoom-reveal p-6 md:p-8 rounded-2xl bg-[#0f172a]/70 backdrop-blur-md border border-blue-500/30 hover:border-blue-500/60 shadow-xl transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <!-- Cabecera interna: Icono al costado del Título (en web y móvil) -->
+                    <div class="flex items-center gap-4 mb-4 md:mb-6">
+                        <div class="w-12 h-12 min-w-[3rem] rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 text-xl">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-white font-space leading-snug">
+                            Arquitectura Web Ultra Ligera & SEO
+                        </h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Desarrollamos con código limpio optimizado para posicionar en Google. Tu web cargará al instante para retener a tus clientes antes de que cierren la pestaña.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="benefit-card zoom-reveal p-6 md:p-8 rounded-2xl bg-[#0f172a]/70 backdrop-blur-md border border-blue-500/30 hover:border-blue-500/60 shadow-xl transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-4 mb-4 md:mb-6">
+                        <div class="w-12 h-12 min-w-[3rem] rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 text-xl">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-white font-space leading-snug">
+                            Estética Cinemática & Enfoque de Ventas
+                        </h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Diseños modernos de alto impacto visual creados específicamente para transmitir autoridad, destacar frente a tu competencia y guiar al usuario directo a comprar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="benefit-card zoom-reveal p-6 md:p-8 rounded-2xl bg-[#0f172a]/70 backdrop-blur-md border border-blue-500/30 hover:border-blue-500/60 shadow-xl transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-4 mb-4 md:mb-6">
+                        <div class="w-12 h-12 min-w-[3rem] rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 text-xl">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-white font-space leading-snug">
+                            Tranquilidad y Soporte Continuo
+                        </h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        No te dejamos solo tras el lanzamiento. Contamos con soporte técnico continuo y planes de mantenimiento para que tu plataforma funcione siempre sin preocupaciones.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Micro-Call to Action (Transición hacia la siguiente sección) -->
+        <div class="text-center mt-12 md:mt-14">
+            <a href="#pricing" class="inline-flex items-center gap-2 text-sm md:text-base font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+                ¿Listo para dar el siguiente paso? Explora nuestros paquetes y precios aquí 
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<section class="pricing-section px-4 sm:px-6 py-12">
+  <div class="section-header zoom-reveal" id="planes">
+    <h2>Planes de Desarrollo Web</h2>
+    <p>Elige la solución que mejor se adapta a las necesidades de tu negocio.</p>
+  </div>
+
+  <div class="swipe-indicator md:hidden">
+    <span>Desliza para ver más</span>
+    <i class="fa-solid fa-arrow-right"></i>
+  </div>
+
+  <div class="pricing-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[77.5rem] mx-auto">
+
+    <!-- PLAN ESENCIAL -->
+    <div class="pricing-card zoom-reveal float-element">
+      <div class="plan-badge">Inicial</div>
+
+      <h3>Plan Esencial</h3>
+
+      <div class="price">
+        <span class="currency">Bs</span>690
+        <span class="regular-price">Reg. Bs 890</span>
+      </div>
+
+      <p class="plan-desc">
+        Ideal para profesionales independientes y emprendimientos.
+      </p>
+
+      <ul class="plan-features">
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Landing Page de hasta 5 secciones
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Diseño adaptable a celular, tablet y PC
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          WhatsApp + formulario de contacto
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Dominio .com + Hosting por 1 año
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          SSL + SEO Básico
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          15 días de soporte postentrega
+        </li>
+      </ul>
+
+      <div class="plan-actions">
+        <a href="#contacto" class="btn-plan btn-primary w-full text-center">
+          Solicitar Plan
+        </a>
+      </div>
+    </div>
+
+
+    <!-- PLAN PROFESIONAL -->
+    <div class="pricing-card featured zoom-reveal float-element">
+      <div class="plan-badge popular">Más Recomendado</div>
+
+      <h3>Plan Profesional</h3>
+
+      <div class="price">
+        <span class="currency">Bs</span>1.490
+      </div>
+
+      <p class="plan-desc">
+        Ideal para Pymes y negocios que necesitan una presencia digital completa.
+      </p>
+
+      <ul class="plan-features">
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Hasta 5 páginas personalizadas
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          SEO On-Page
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Google Analytics + Search Console
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          1 correo corporativo
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Dominio .com + Hosting por 1 año
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          30 días de soporte postentrega
+        </li>
+      </ul>
+
+      <div class="plan-actions">
+        <a href="#contacto" class="btn-plan btn-primary w-full text-center">
+          Solicitar Plan
+        </a>
+      </div>
+    </div>
+
+
+    <!-- PLAN PREMIUM -->
+    <div class="pricing-card zoom-reveal float-element">
+      <div class="plan-badge">Empresarial</div>
+
+      <h3>Plan Premium</h3>
+
+      <div class="price">
+        <span class="currency">Bs</span>2.790
+      </div>
+
+      <p class="plan-desc">
+        Para empresas y marcas que necesitan una presencia digital avanzada.
+      </p>
+
+      <ul class="plan-features">
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Hasta 10 páginas personalizadas
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Blog administrable
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          SEO avanzado
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Hasta 3 correos corporativos
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Código fuente del proyecto incluido
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          45 días de soporte postentrega
+        </li>
+      </ul>
+
+      <div class="plan-actions">
+        <a href="#contacto" class="btn-plan btn-primary w-full text-center">
+          Solicitar Plan
+        </a>
+      </div>
+    </div>
+
+
+    <!-- E-COMMERCE -->
+    <div class="pricing-card zoom-reveal float-element">
+      <div class="plan-badge ecommerce">E-Commerce</div>
+
+      <h3>Tienda Online</h3>
+
+      <div class="price">
+        <span class="currency">Bs</span>3.500
+        <span class="regular-price">Desde</span>
+      </div>
+
+      <p class="plan-desc">
+        Para negocios que quieren vender productos directamente por internet.
+      </p>
+
+      <ul class="plan-features">
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Catálogo de productos
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Carrito de compras
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Gestión de pedidos
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Gestión básica de inventario
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Configuración de métodos de pago
+        </li>
+
+        <li>
+          <i class="fa-solid fa-check"></i>
+          Capacitación básica
+        </li>
+      </ul>
+
+      <div class="plan-actions">
+        <a href="#contacto" class="btn-plan btn-primary w-full text-center">
+          Cotizar Tienda
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="proceso" class="process-section">
+    <div class="section-header">
+        <h2 class="section-title">¿Cómo trabajamos?</h2>
+        <p class="section-subtitle">Un proceso transparente y estructurado para llevar tu proyecto web al éxito.</p>
+    </div>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span class="icon">📋</span>
+                <span class="title">Pilar 1: Briefing y Planificación</span>
+                <span class="arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p><strong>Definimos las bases, estructura y estrategia de tu sitio web.</strong></p>
+                <ul>
+                    <li><strong>1. Briefing inicial:</strong> Nos cuentas tu idea, objetivos y referencias visuales.</li>
+                    <li><strong>2. Elección del plan:</strong> Seleccionamos el paquete que mejor se adapte a tu negocio.</li>
+                    <li><strong>3. Estructura y contenidos:</strong> Organizamos la jerarquía de páginas y definimos los textos clave.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span class="icon">💻</span>
+                <span class="title">Pilar 2: Desarrollo y Diseño</span>
+                <span class="accordion-arrow arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p><strong>Diseñamos y programamos tu plataforma con altos estándares de rendimiento.</strong></p>
+                <ul>
+                    <li><strong>4. Diseño visual:</strong> Creamos la interfaz atractiva, moderna y alineada a tu marca.</li>
+                    <li><strong>5. Desarrollo web:</strong> Programamos con código limpio, responsivo y optimizado para celulares.</li>
+                    <li><strong>6. Revisión y ajustes:</strong> Te presentamos avances para afinar detalles y garantizar que te encante.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span class="icon">🌐</span>
+                <span class="title">Pilar 3: Lanzamiento, Entrega y Soporte</span>
+                <span class="arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p><strong>Publicamos tu sitio, entregamos accesos y seguimos acompañándote.</strong></p>
+                <ul>
+                    <li><strong>7. Publicación oficial:</strong> Conexión de dominio, certificado SSL y verificación técnica.</li>
+                    <li><strong>8. Entrega final:</strong> Acceso a sitio/dominio, correos corporativos, manual de uso y respaldo.</li>
+                    <li><strong>9. Seguimos acompañándote:</strong> Planes de mantenimiento opcionales para mantener tu sitio actualizado.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="commitment">
+        <h3>Nuestro Compromiso</h3>
+        <div class="commitment-grid">
+            <span>✅ Comunicación clara</span>
+            <span>✅ Fechas definidas</span>
+            <span>✅ Diseño adaptable</span>
+            <span>✅ Optimizado</span>
+            <span>✅ Soporte post-entrega</span>
+        </div>
+    </div>
+</section>
+
+<section class="addons-section px-4 sm:px-6 py-12 max-w-[77.5rem] mx-auto">
+  <div class="section-header zoom-reveal">
+    <h2>Servicios Adicionales</h2>
+    <p>Personaliza tu proyecto con servicios complementarios según las necesidades de tu negocio.</p>
+  </div>
+
+  <div class="addons-grid zoom-reveal float-element grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+
+    <div class="addon-item">
+      <span>Sección adicional</span>
+      <strong>Bs 100</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Página adicional</span>
+      <strong>Desde Bs 220</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Logo profesional</span>
+      <strong>Bs 300</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Redacción web</span>
+      <strong>Desde Bs 200</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Segundo idioma</span>
+      <strong>Desde Bs 350</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>SEO Avanzado</span>
+      <strong>Bs 500</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Sistema de reservas</span>
+      <strong>Desde Bs 600</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Correo corporativo</span>
+      <strong>Bs 240/año</strong>
+    </div>
+
+    <div class="addon-item">
+      <span>Gestión Meta Ads</span>
+      <strong>Desde Bs 600/mes</strong>
+    </div>
+
+  </div>
+
+
+  <div class="section-header zoom-reveal">
+    <h2>Todo proyecto RENVO incluye</h2>
+  </div>
+
+  <div class="guarantees-bar zoom-reveal flex flex-wrap justify-center gap-4">
+
+    <div class="guarantee-chip">
+      <i class="fa-solid fa-mobile-screen"></i>
+      Diseño Responsive
+    </div>
+
+    <div class="guarantee-chip">
+      <i class="fa-solid fa-server"></i>
+      Dominio + Hosting 1 año
+    </div>
+
+    <div class="guarantee-chip">
+      <i class="fa-solid fa-lock"></i>
+      SSL / HTTPS
+    </div>
+
+    <div class="guarantee-chip">
+      <i class="fa-solid fa-rotate"></i>
+      Revisiones incluidas
+    </div>
+
+    <div class="guarantee-chip">
+      <i class="fa-solid fa-headset"></i>
+      Soporte Postentrega
+    </div>
+
+    <div class="guarantee-chip highlight">
+      <i class="fa-solid fa-handshake"></i>
+      Pago 50% inicio / 50% final
+    </div>
+
+  </div>
+</section>
+
+<section id="integration" class="mx-auto px-6 py-24 max-w-[77.5rem] relative text-center">
+  <div class="reveal-line overflow-hidden flex justify-center">
+    <p class="text-xs uppercase text-[#60a5fa]"
+       style="letter-spacing:0.3rem; font-family:'Sora', sans-serif; font-weight:600;">
+      Mantenimiento
+    </p>
+  </div>
+
+  <div class="reveal-line overflow-hidden mt-3">
+    <h2 class="tracking-tight text-white"
+        style="font-size:clamp(1.875rem,5vw,3.5rem); font-family:'Space Grotesk', sans-serif; font-weight:700; line-height:1.05;">
+      Planes de Mantenimiento Mensual
+    </h2>
+  </div>
+
+  <div class="mt-4 flex justify-center">
+    <p class="text-sm md:text-base text-[#9c988f] max-w-xl"
+       style="font-family:'Sora', sans-serif;">
+      Mantén tu sitio actualizado, estable y acompañado después de la entrega.
+    </p>
+  </div>
+
+  <div class="swipe-indicator md:hidden">
+    <span>Desliza para ver más</span>
+    <i class="fa-solid fa-arrow-right"></i>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 text-left">
+
+    <!-- MANTENIMIENTO BÁSICO -->
+    <div class="fade-card flex flex-col justify-between transition-colors duration-500 bg-neutral-900 rounded-2xl px-8 py-10"
+         style="transform-style:preserve-3d; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.03);">
+
+      <div>
+        <iconify-icon
+          icon="solar:shield-check-linear"
+          width="2.5rem"
+          class="text-[#60a5fa] mb-6">
+        </iconify-icon>
+
+        <h3 class="text-xl tracking-tight text-[#e8e6e3] mb-2"
+            style="font-family:'Space Grotesk', sans-serif; font-weight:700;">
+          Mantenimiento Básico
+        </h3>
+
+        <div class="text-2xl font-bold text-white mb-4"
+             style="font-family:'Sora', sans-serif;">
+          Bs 100
+          <span class="text-sm font-normal text-[#9c988f]">/mes</span>
+        </div>
+
+        <p class="text-sm text-[#9c988f] mb-5"
+           style="font-family:'Sora', sans-serif;">
+          Para sitios pequeños que necesitan supervisión y ajustes ocasionales.
+        </p>
+
+        <ul class="plan-features">
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Monitoreo básico del sitio
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Revisión de enlaces y formularios
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            1 cambio pequeño al mes
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Hasta 30 min de trabajo mensual
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Soporte estándar
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-8">
+        <a href="#contacto"
+           class="btn-plan inline-block w-full py-3 px-4 text-center rounded-xl">
+          Elegir Plan
+        </a>
+      </div>
+    </div>
+
+
+    <!-- MANTENIMIENTO PROFESIONAL -->
+    <div class="fade-card flex flex-col justify-between transition-colors duration-500 bg-neutral-900 rounded-2xl px-8 py-10 relative"
+         style="transform-style:preserve-3d; border:1px solid var(--blue-accent,#3b82f6); background:rgba(255,255,255,0.05); box-shadow:0 0 20px rgba(59,130,246,0.15);">
+
+      <div>
+        <span class="absolute top-4 right-4 bg-[#3b82f6]/10 text-[#60a5fa] text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full"
+              style="font-family:'Sora', sans-serif;">
+          Más Recomendado
+        </span>
+
+        <iconify-icon
+          icon="solar:rocket-2-linear"
+          width="2.5rem"
+          class="text-[#60a5fa] mb-6">
+        </iconify-icon>
+
+        <h3 class="text-xl tracking-tight text-[#e8e6e3] mb-2"
+            style="font-family:'Space Grotesk', sans-serif; font-weight:700;">
+          Mantenimiento Profesional
+        </h3>
+
+        <div class="text-2xl font-bold text-white mb-4"
+             style="font-family:'Sora', sans-serif;">
+          Bs 180
+          <span class="text-sm font-normal text-[#9c988f]">/mes</span>
+        </div>
+
+        <p class="text-sm text-[#9c988f] mb-5"
+           style="font-family:'Sora', sans-serif;">
+          Para negocios que actualizan contenido y necesitan atención prioritaria.
+        </p>
+
+        <ul class="plan-features">
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Todo lo del plan Básico
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Hasta 3 cambios pequeños al mes
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Hasta 1 hora de trabajo mensual
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Actualización de contenido
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Revisión SEO básica
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Soporte prioritario
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-8">
+        <a href="#contacto"
+           class="btn-plan inline-block w-full py-3 px-4 text-center rounded-xl"
+           style="background:var(--blue-accent,#3b82f6); border-color:var(--blue-accent,#3b82f6); color:#ffffff;">
+          Elegir Plan
+        </a>
+      </div>
+    </div>
+
+
+    <!-- MANTENIMIENTO PREMIUM -->
+    <div class="fade-card flex flex-col justify-between transition-colors duration-500 bg-neutral-900 rounded-2xl px-8 py-10"
+         style="transform-style:preserve-3d; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.03);">
+
+      <div>
+        <iconify-icon
+          icon="solar:crown-linear"
+          width="2.5rem"
+          class="text-[#60a5fa] mb-6">
+        </iconify-icon>
+
+        <h3 class="text-xl tracking-tight text-[#e8e6e3] mb-2"
+            style="font-family:'Space Grotesk', sans-serif; font-weight:700;">
+          Mantenimiento Premium
+        </h3>
+
+        <div class="text-2xl font-bold text-white mb-4"
+             style="font-family:'Sora', sans-serif;">
+          Bs 300
+          <span class="text-sm font-normal text-[#9c988f]">/mes</span>
+        </div>
+
+        <p class="text-sm text-[#9c988f] mb-5"
+           style="font-family:'Sora', sans-serif;">
+          Para marcas que necesitan seguimiento continuo, SEO y reportes.
+        </p>
+
+        <ul class="plan-features">
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Hasta 5 cambios al mes
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Hasta 2 horas de trabajo mensual
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Actualización frecuente de contenido
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Revisión SEO mensual
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Revisión de Google Analytics
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Reporte mensual
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            Soporte prioritario
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-8">
+        <a href="#contacto"
+           class="btn-plan inline-block w-full py-3 px-4 text-center rounded-xl">
+          Elegir Plan
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="portafolio" class="mx-auto px-6 py-24 max-w-[77.5rem] relative">
+
+  <!-- ENCABEZADO -->
+  <div class="text-center mb-12">
+
+    <div class="reveal-line overflow-hidden flex justify-center">
+      <p class="text-xs uppercase text-[#60a5fa]"
+         style="letter-spacing:0.3rem; font-family:'Sora', sans-serif; font-weight:600;">
+        Portafolio
+      </p>
+    </div>
+
+    <div class="reveal-line overflow-hidden mt-3">
+      <h2 class="tracking-tight text-white"
+          style="font-size:clamp(1.875rem,5vw,3.5rem); font-family:'Space Grotesk', sans-serif; font-weight:700; line-height:1.05;">
+        Proyectos desarrollados
+      </h2>
+    </div>
+
+  </div>
+
+
+  <!-- GRID PORTAFOLIO -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+    <!-- KERAVNOS -->
+    <div class="fade-card relative overflow-hidden rounded-2xl"
+         style="height:320px; border:1px solid rgba(255,255,255,0.08); background:#0f172a;">
+
+      <iframe
+        src="https://rau232s.github.io/keravnos/#"
+        title="Keravnos Studio"
+        loading="lazy"
+        style="
+          width:200%;
+          height:200%;
+          border:0;
+          transform:scale(0.5);
+          transform-origin:top left;
+          pointer-events:none;
+        ">
+      </iframe>
+
+      <a href="https://rau232s.github.io/keravnos/#"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Visitar Keravnos Studio"
+         style="
+           position:absolute;
+           inset:0;
+           z-index:3;
+           display:block;
+         ">
+      </a>
+
+    </div>
+
+
+    <!-- KITZUNE DIVISION -->
+    <div class="fade-card relative overflow-hidden rounded-2xl"
+         style="height:320px; border:1px solid rgba(255,255,255,0.08); background:#0f172a;">
+
+      <iframe
+        src="https://rau232s.github.io/kitzune/"
+        title="Kitzune Division"
+        loading="lazy"
+        style="
+          width:200%;
+          height:200%;
+          border:0;
+          transform:scale(0.5);
+          transform-origin:top left;
+          pointer-events:none;
+        ">
+      </iframe>
+
+      <a href="https://rau232s.github.io/kitzune/"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Visitar Kitzune Division"
+         style="
+           position:absolute;
+           inset:0;
+           z-index:3;
+           display:block;
+         ">
+      </a>
+
+    </div>
+
+
+    <!-- IIM -->
+    <div class="fade-card relative overflow-hidden rounded-2xl"
+         style="height:320px; border:1px solid rgba(255,255,255,0.08); background:#0f172a;">
+
+      <iframe
+        src="https://academy.iimacademy.qzz.io"
+        title="Instituto de Inteligencias Múltiples"
+        loading="lazy"
+        style="
+          width:200%;
+          height:200%;
+          border:0;
+          transform:scale(0.5);
+          transform-origin:top left;
+          pointer-events:none;
+        ">
+      </iframe>
+
+      <a href="https://academy.iimacademy.qzz.io"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Visitar IIM"
+         style="
+           position:absolute;
+           inset:0;
+           z-index:3;
+           display:block;
+         ">
+      </a>
+
+    </div>
+
+
+    <!-- NINO RAUL MÚSICA -->
+    <div class="fade-card relative overflow-hidden rounded-2xl"
+         style="height:320px; border:1px solid rgba(255,255,255,0.08); background:#0f172a;">
+
+      <iframe
+        src="https://academy.iimacademy.qzz.io/ninoraul/ninoraul.html"
+        title="Nino Raul Música"
+        loading="lazy"
+        style="
+          width:200%;
+          height:200%;
+          border:0;
+          transform:scale(0.5);
+          transform-origin:top left;
+          pointer-events:none;
+        ">
+      </iframe>
+
+      <a href="https://academy.iimacademy.qzz.io/ninoraul/ninoraul.html"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Visitar Nino Raul Música"
+         style="
+           position:absolute;
+           inset:0;
+           z-index:3;
+           display:block;
+         ">
+      </a>
+
+    </div>
+
+
+    <!-- PORTAFOLIO ING. SUÁREZ -->
+    <div class="fade-card relative overflow-hidden rounded-2xl md:col-span-2"
+         style="height:360px; border:1px solid rgba(255,255,255,0.08); background:#0f172a;">
+
+      <iframe
+        src="https://academy.iimacademy.qzz.io/ing_suarez/"
+        title="Portafolio Ing. Suarez"
+        loading="lazy"
+        style="
+          width:200%;
+          height:200%;
+          border:0;
+          transform:scale(0.5);
+          transform-origin:top left;
+          pointer-events:none;
+        ">
+      </iframe>
+
+      <a href="https://academy.iimacademy.qzz.io/ing_suarez/"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Visitar Portafolio Ing. Suarez"
+         style="
+           position:absolute;
+           inset:0;
+           z-index:3;
+           display:block;
+         ">
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="faq-contact" class="faq-cta-section">
+    <div class="faq-cta-container">
+        
+        <div class="faq-column">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <p class="section-subtitle">Dudas rápidas antes de empezar.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="title">¿Cuánto tardan en entregar la web?</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Entre 5 a 10 días hábiles dependiendo del plan elegido y la rapidez con la que nos entregues la información básica.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="title">¿Necesito tener los textos e imágenes listos?</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>No obligatoriamente. Te guiamos con una estructura y un briefing para armar o redactar los contenidos clave juntos.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="title">¿Cómo es el soporte después de publicar?</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Incluimos soporte técnico inicial y tienes la opción de contratar planes de mantenimiento mensual opcionales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-column">
+            <div class="cta-card">
+                <h3>¿Listo para despegar tu proyecto?</h3>
+                <p>Hablemos directamente por WhatsApp. Resolvemos tus dudas y agendamos tu web en minutos.</p>
+                
+                <a href="https://wa.me/TU_NUMERO_AQUI?text=Hola,%20vi%20sus%20planes%20de%20diseño%20web%20y%20me%20interesa%20agendar%20mi%20proyecto" 
+                   target="_blank" 
+                   class="whatsapp-btn">
+                    <span class="wa-icon">💬</span> Hablar por WhatsApp
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer class="mx-auto px-6 py-16 max-w-[77.5rem] border-t border-white/[0.06]">
+  <div class="flex flex-col md:flex-row justify-between gap-10">
+    <div>
+      <span class="text-sm font-medium tracking-tighter uppercase text-white">RENVO</span>
+      <p class="text-sm mt-4 text-[#7d7a73]" style="max-width:17.5rem;">Tecnología para crecer. Diseñamos soluciones digitales que ayudan a los negocios a atraer clientes, automatizar procesos y crecer.</p>
+    </div>
+    <div class="flex gap-16 text-sm text-[#9c988f]">
+      <div class="flex flex-col gap-3">
+        <span class="text-xs uppercase text-[#5c5a55] tracking-wider font-semibold">Servicios</span>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">Desarrollo Web</a>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">Landing Pages</a>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">Automatización</a>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">IA</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <span class="text-xs uppercase text-[#5c5a55] tracking-wider font-semibold">Empresa</span>
+        <a href="#nosotros" class="hover:text-white transition-colors" style="display: inline-flex;">Nosotros</a>
+        <a href="#portafolio" class="hover:text-white transition-colors" style="display: inline-flex;">Portafolio</a>
+        <a href="#blog" class="hover:text-white transition-colors" style="display: inline-flex;">Blog</a>
+        <a href="#contacto" class="hover:text-white transition-colors" style="display: inline-flex;">Contacto</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-16 pt-8 border-t border-white/[0.03] flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-xs text-[#5c5a55]">© 2026 Renvo. Todos los derechos reservados.</p>
+    <p class="text-xs text-[#5c5a55] italic">Construido para crecer.</p>
+  </div>
+</footer>
+
+<script src="canvas-petals.js"></script>
+<script src="cursor.js"></script>
+<script src="js/timeline.js"></script>
+<script src="reveal.js"></script>
+<script src="card-tilt.js"></script>
+<script src="js/video-control.js"></script>
+<script src="gsap-effect.js"></script>
+<script type="module" src="three-bg.js"></script>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (menuBtn && navMenu) {
+    menuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('hidden');
+      navMenu.classList.toggle('flex');
+    });
+
+    // Cerrar menú al hacer clic en un enlace en celular
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          navMenu.classList.add('hidden');
+          navMenu.classList.remove('flex');
+        }
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+/* ===================================================
+   2. VARIABLES GLOBALES (Colores de la sección Pricing)
+   =================================================== */
+:root {
+  --blue-accent: #3b82f6;
+  --blue-glow: rgba(59, 130, 246, 0.25);
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-featured: rgba(255, 255, 255, 0.1);
+  --border-blue: rgba(59, 130, 246, 0.25);
+  --text-white: #ffffff;
+  --text-muted: #cbd5e1;
+}
+
+/* ===================================================
+   3. ESTILOS GENERALES Y TIPOGRAFÍA BASE
+   =================================================== */
+body {
+  font-family: 'Sora', sans-serif;
+  color: var(--text-white);
+  background-color: #0f172a; /* Fondo oscuro base */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Aplicar Space Grotesk Bold por defecto a todos los títulos principales (h1, h2) */
+h1, h2, .pricing-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+}
+
+p, span, li, a, button {
+  font-family: 'Sora', sans-serif;
+}
+
+
+/* ===================================================
+   MENÚ DE NAVEGACIÓN (Escritorio) - Corregido y espaciado
+   =================================================== */
+
+.nav-menu {
+  display: none !important; /* Oculto por defecto en móviles */
+  align-items: center !important;
+  gap: 2.5rem !important;   /* <-- AQUÍ ESTÁ EL ESPACIO (Separa los enlaces 40px) */
+  font-size: 0.875rem !important;
+  color: #b8b4ae !important;
+}
+
+
+/* Enlaces individuales del menú */
+.nav-link {
+  color: #b8b4ae !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+/* Efecto hover: se ponen blancos al pasar el mouse */
+.nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* EFECTO ZOOM REVEAL */
+.zoom-reveal {
+  opacity: 0;
+  transform: scale(0.85) translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.zoom-reveal.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+/* BENEFICIOS */
+.benefits-section {
+  padding: 90px 5%;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.benefit-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.card-icon {
+  font-size: 32px;
+  color: white;
+  margin-bottom: 18px;
+}
+
+/* ADICIONALES Y GARANTÍAS */
+.addons-section {
+  padding: 60px 5%;
+}
+
+/* 3 Columnas y 2 Filas (Desktop / Tablets) */
+.addons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Fuerza 3 columnas exactas */
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.addon-item {
+  background: var(--card-bg);
+  border: 1px solid var(--blue-accent);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.guarantees-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.guarantee-chip {
+  background: rgba(100, 116, 139, 0.1);
+  border: 1px solid var(--border-color);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+}
+
+.guarantee-chip.highlight {
+  border-color: var(--blue-accent);
+  color: var(--blue-accent);
+}
+
+/* Se muestra como columna en celular al presionar el botón */
+.nav-menu.mobile-open {
+  display: flex !important;
+  flex-direction: column !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  width: 100% !important;
+  background-color: #0f172a !important;
+  padding: 1.5rem !important;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4) !important;
+  z-index: 50 !important;
+}
+
+/* En computadoras (md en adelante) se muestra siempre en línea */
+@media (min-width: 768px) {
+  .nav-menu {
+    display: flex !important;
+    position: static !important;
+    width: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+
+/* ===================================================
+   CARRUSEL TÁCTIL Y COMPACTO PARA MÓVILES (Beneficios)
+   =================================================== */
+@media (max-width: 768px) {
+    .benefits-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 1rem !important;
+        padding-bottom: 1.5rem !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-padding-left: 1.5rem;
+    }
+
+    .benefits-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .benefits-grid::-webkit-scrollbar-thumb {
+        background: rgba(59, 130, 246, 0.4);
+        border-radius: 4px;
+    }
+
+    .benefit-card {
+        width: 85vw !important;
+        min-width: 85vw !important;
+        max-width: 85vw !important;
+        flex-shrink: 0 !important;
+        scroll-snap-align: center !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* Ocultar la barra de desplazamiento vertical en PC para toda la página */
+html {
+  overflow-y: scroll; /* Mantiene la funcionalidad de desplazamiento */
+}
+
+/* Ocultar barra en navegadores basados en WebKit (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ocultar barra en Firefox e Internet Explorer */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+

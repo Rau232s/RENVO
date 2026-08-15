@@ -112,16 +112,77 @@
   </div>
 </section>
 
-<footer id="contacto" class="bg-neutral-950 border-t border-white/[0.06] py-12 px-6 mt-20 text-center">
-  <div class="max-w-[77.5rem] mx-auto">
-    <span class="text-xl font-space font-bold tracking-tighter uppercase text-white">
-      <span class="font-bold text-[#3B82F6]">REN</span>VO
-    </span>
-    <p class="text-[#cbd5e1] text-sm mt-3">Transformando ideas en experiencias digitales de alto impacto.</p>
-    <p class="text-xs text-slate-500 mt-8">&copy; 2026 Renvo. Todos los derechos reservados.</p>
+<footer class="mx-auto px-6 py-16 max-w-[77.5rem] border-t border-white/[0.06]">
+  <div class="flex flex-col md:flex-row justify-between gap-10">
+    <div>
+      <span class="text-sm font-medium tracking-tighter uppercase text-white">RENVO</span>
+      <p class="text-sm mt-4 text-[#7d7a73]" style="max-width:17.5rem;">Tecnología para crecer. Diseñamos soluciones digitales que ayudan a los negocios a atraer clientes, automatizar procesos y crecer.</p>
+    </div>
+    <div class="flex gap-16 text-sm text-[#9c988f]">
+      <div class="flex flex-col gap-3">
+        <span class="text-xs uppercase text-[#5c5a55] tracking-wider font-semibold">Servicios</span>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">Desarrollo Web</a>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">Landing Pages</a>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">Automatización</a>
+        <a href="#" class="hover:text-white transition-colors" style="display: inline-flex;">IA</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <span class="text-xs uppercase text-[#5c5a55] tracking-wider font-semibold">Empresa</span>
+        <a href="#nosotros" class="hover:text-white transition-colors" style="display: inline-flex;">Nosotros</a>
+        <a href="#portafolio" class="hover:text-white transition-colors" style="display: inline-flex;">Portafolio</a>
+        <a href="blog.html"
+   class="hover:text-white transition-colors"
+   style="display:inline-flex;">
+  Blog
+</a>
+
+<a href="https://wa.me/59165200690?text=Hola%2C%20visité%20la%20página%20de%20RENVO%20y%20quisiera%20recibir%20información%20sobre%20sus%20servicios%20de%20desarrollo%20web."
+   target="_blank"
+   rel="noopener noreferrer"
+   class="hover:text-white transition-colors"
+   style="display:inline-flex;">
+  Contacto
+</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-16 pt-8 border-t border-white/[0.03] flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-xs text-[#5c5a55]">© 2024 Renvo. Todos los derechos reservados.</p>
+    <p class="text-xs text-[#5c5a55] italic">Construido para crecer.</p>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/canvas-petals.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/reveal.js"></script>
+<script src="js/card-tilt.js"></script>
+<script src="js/video-control.js"></script>
+<script src="js/gsap-effect.js"></script>
+<script type="module" src="js/three-bg.js"></script>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (menuBtn && navMenu) {
+    menuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('hidden');
+      navMenu.classList.toggle('flex');
+    });
+
+    // Cerrar menú al hacer clic en un enlace en celular
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          navMenu.classList.add('hidden');
+          navMenu.classList.remove('flex');
+        }
+      });
+    });
+  }
+</script>
+
 </body>
 </html>

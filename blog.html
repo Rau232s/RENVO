@@ -1,27 +1,158 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
+  <!-- =========================================
+       CONFIGURACIÓN BÁSICA
+  ========================================== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Renvo — Blog y Recursos sobre Páginas Web</title>
-  
+
+  <title>Blog de Diseño Web, SEO y Negocios Digitales | RENVO</title>
+
+  <meta
+    name="description"
+    content="Consejos y recursos de RENVO sobre diseño web, SEO, rendimiento, presencia digital y estrategias para ayudar a negocios a crecer en internet."
+  >
+
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="RENVO">
+  <meta name="theme-color" content="#0a0a0c">
+
+  <!-- URL CANÓNICA -->
+  <link rel="canonical" href="https://renvo.cc/blog.html">
+
+
+  <!-- =========================================
+       OPEN GRAPH
+       WhatsApp, Facebook, LinkedIn, etc.
+  ========================================== -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_BO">
+  <meta property="og:site_name" content="RENVO">
+
+  <meta
+    property="og:title"
+    content="Blog de Diseño Web, SEO y Negocios Digitales | RENVO"
+  >
+
+  <meta
+    property="og:description"
+    content="Consejos y recursos sobre diseño web, SEO, presencia digital y estrategias para hacer crecer tu negocio en internet."
+  >
+
+  <meta property="og:url" content="https://renvo.cc/blog.html">
+
+  <meta
+    property="og:image"
+    content="https://renvo.cc/images/og-renvo.png"
+  >
+
+  <meta
+    property="og:image:secure_url"
+    content="https://renvo.cc/images/og-renvo.png"
+  >
+
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta
+    property="og:image:alt"
+    content="RENVO - Blog de diseño web, SEO y negocios digitales"
+  >
+
+
+  <!-- =========================================
+       TWITTER / X
+  ========================================== -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta
+    name="twitter:title"
+    content="Blog de Diseño Web, SEO y Negocios Digitales | RENVO"
+  >
+
+  <meta
+    name="twitter:description"
+    content="Consejos sobre diseño web, SEO y estrategias digitales para negocios."
+  >
+
+  <meta
+    name="twitter:image"
+    content="https://renvo.cc/images/og-renvo.png"
+  >
+
+  <meta
+    name="twitter:image:alt"
+    content="RENVO - Blog de diseño web, SEO y negocios digitales"
+  >
+
+
+  <!-- =========================================
+       FUENTES
+  ========================================== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Sora:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- =========================================
+       ICONOS
+  ========================================== -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  >
+
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-  
+
+
+  <!-- =========================================
+       TAILWIND
+  ========================================== -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
+
+  <!-- =========================================
+       GSAP
+  ========================================== -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+
+  <!-- =========================================
+       CSS RENVO
+  ========================================== -->
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="cc/pricing2.css">
+  <link rel="stylesheet" href="css/pricing2.css">
   <link rel="stylesheet" href="css/reveal.css">
   <link rel="stylesheet" href="css/cursor.css">
   <link rel="stylesheet" href="css/main.css">
+
+
+  <!-- =========================================
+       GOOGLE ANALYTICS
+  ========================================== -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-2M6V79H761">
+  </script>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-2M6V79H761');
+  </script>
+
 </head>
 <body class="bg-[#0f172a] text-white font-sans antialiased" style="margin:0; overflow-x:hidden;">
 

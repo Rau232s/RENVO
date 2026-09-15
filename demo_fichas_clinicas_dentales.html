@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentalCare — Demo de Fichas Clínicas</title>
+<style>
+:root{
+  --bg:#f5f7fb; --card:#fff; --text:#172033; --muted:#6b7280;
+  --primary:#176b87; --primary2:#2aa7a0; --line:#e5e9f0;
+  --green:#16845b; --orange:#c77a12; --red:#c54a4a;
+  --shadow:0 10px 30px rgba(26,45,72,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;background:#102d3a;color:#dceaf0;padding:22px 16px;position:fixed;inset:0 auto 0 0}
+.logo{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:800;padding:8px 10px 25px}
+.logo span{background:#2aa7a0;color:white;width:36px;height:36px;border-radius:11px;display:grid;place-items:center}
+.nav{display:grid;gap:7px}
+.nav button{border:0;background:transparent;color:#bdd0d8;text-align:left;padding:12px 13px;border-radius:10px}
+.nav button:hover,.nav button.active{background:#1b4657;color:white}
+.sidebar-bottom{position:absolute;bottom:22px;left:16px;right:16px;font-size:12px;color:#86a5b1}
+.main{margin-left:250px;width:calc(100% - 250px);padding:25px}
+.topbar{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:22px}
+.search{background:white;border:1px solid var(--line);border-radius:12px;padding:11px 14px;width:min(440px,50vw);outline:none}
+.profile{display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:#d9eef0;display:grid;place-items:center;font-weight:800;color:#176b87}
+h1{margin:0;font-size:25px}
+h2{font-size:17px;margin:0 0 15px}
+h3{font-size:14px;margin:0 0 9px}
+.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.kpi strong{font-size:26px;display:block;margin:5px 0}
+.kpi .icon{font-size:22px}
+.content{grid-template-columns:1.35fr .65fr;margin-top:16px}
+.patient-list{max-height:530px;overflow:auto}
+.patient{display:flex;gap:11px;padding:12px;border-radius:12px;cursor:pointer;border:1px solid transparent}
+.patient:hover,.patient.selected{background:#edf8f8;border-color:#c9e8e5}
+.pavatar{width:42px;height:42px;border-radius:50%;background:#e7edf7;display:grid;place-items:center;font-weight:800;color:#40526b;flex:none}
+.status{font-size:11px;padding:4px 7px;border-radius:20px;background:#e8f7ef;color:var(--green);display:inline-block}
+.badge{font-size:11px;padding:4px 8px;border-radius:20px;background:#edf1f6;color:#586579}
+.record-head{display:flex;gap:15px;align-items:center}
+.record-photo{width:74px;height:74px;border-radius:15px;object-fit:cover}
+.tabs{display:flex;gap:4px;overflow:auto;margin:17px 0 0;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:transparent;padding:12px 13px;color:var(--muted);white-space:nowrap}
+.tabs button.active{color:var(--primary);border-bottom:2px solid var(--primary);font-weight:700}
+.tab{display:none;padding-top:18px}.tab.active{display:block}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.field{background:#f8fafc;border:1px solid #edf0f5;padding:11px;border-radius:10px}
+.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}
+.field strong{font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.timeline{border-left:2px solid #d9e7eb;padding-left:17px;display:grid;gap:16px}
+.event{position:relative}.event:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--primary);position:absolute;left:-23px;top:5px}
+.event .date{font-size:11px;color:var(--muted)}
+textarea,input[type=text],input[type=date],select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;outline:none;background:white}
+textarea{min-height:90px;resize:vertical}
+.primary{border:0;background:var(--primary);color:white;border-radius:10px;padding:10px 14px;font-weight:700}
+.secondary{border:1px solid var(--line);background:white;color:var(--text);border-radius:10px;padding:10px 14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.radio-img{width:100%;height:250px;object-fit:cover;border-radius:12px;background:#111}
+.odontogram{display:grid;grid-template-columns:repeat(16,1fr);gap:5px}
+.tooth{height:42px;border-radius:8px;border:1px solid #d5dce5;background:white;display:grid;place-items:center;font-size:10px;cursor:pointer}
+.tooth:hover{border-color:var(--primary)}
+.tooth.caries{background:#f7d7b4;border-color:#e7a66b}
+.tooth.restored{background:#cce9e4;border-color:#8fcfc4}
+.alert{background:#fff7e8;border:1px solid #f1d69b;padding:12px;border-radius:11px;font-size:12px;color:#75531d}
+.modal{position:fixed;inset:0;background:rgba(10,25,35,.5);display:none;place-items:center;padding:20px;z-index:5}
+.modal.open{display:grid}
+.modal-box{background:white;border-radius:16px;padding:20px;width:min(560px,100%)}
+.close{float:right;border:0;background:#f1f3f6;border-radius:50%;width:30px;height:30px}
+.toast{position:fixed;right:20px;bottom:20px;background:#123743;color:white;padding:12px 16px;border-radius:10px;display:none;z-index:10}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.content{grid-template-columns:1fr}.two{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.sidebar{width:70px;padding:15px 8px}.logo{justify-content:center}.logo b,.nav button span,.sidebar-bottom{display:none}.nav button{text-align:center;font-size:20px}.main{margin-left:70px;width:calc(100% - 70px);padding:15px}.topbar{align-items:flex-start}.search{width:55vw}.kpis{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr}.odontogram{grid-template-columns:repeat(8,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo"><span>🦷</span><b>DentalCare</b></div>
+    <div class="nav">
+      <button class="active" onclick="showModule(this,'dashboard')">🏠 <span>Panel</span></button>
+      <button onclick="showModule(this,'patients')">👥 <span>Pacientes</span></button>
+      <button onclick="showModule(this,'agenda')">📅 <span>Agenda</span></button>
+      <button onclick="showModule(this,'reports')">📊 <span>Reportes</span></button>
+      <button onclick="showModule(this,'security')">🔐 <span>Seguridad</span></button>
+    </div>
+    <div class="sidebar-bottom">DEMO · Datos ficticios<br>Prototipo educativo</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="muted">Gestión odontológica</div>
+        <h1 id="pageTitle">Ficha clínica digital</h1>
+      </div>
+      <div class="profile">
+        <input id="search" class="search" placeholder="Buscar paciente por nombre o CI..." oninput="filterPatients()">
+        <div class="avatar">MC</div>
+      </div>
+    </div>
+
+    <section id="dashboard" class="module">
+      <div class="grid kpis">
+        <div class="card kpi"><span class="icon">👥</span><strong>248</strong><span class="muted">Pacientes registrados</span></div>
+        <div class="card kpi"><span class="icon">📅</span><strong>12</strong><span class="muted">Citas de hoy</span></div>
+        <div class="card kpi"><span class="icon">🦷</span><strong>8</strong><span class="muted">Tratamientos activos</span></div>
+        <div class="card kpi"><span class="icon">📎</span><strong>36</strong><span class="muted">Archivos / imágenes</span></div>
+      </div>
+
+      <div class="grid content">
+        <div class="card">
+          <h2>Pacientes recientes</h2>
+          <div id="patientList" class="patient-list"></div>
+        </div>
+
+        <div class="card">
+          <h2>Resumen del paciente</h2>
+          <div id="summary">
+            <div class="muted">Selecciona un paciente para ver su ficha.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="patients" class="module" style="display:none">
+      <div class="card">
+        <div class="actions" style="justify-content:space-between">
+          <div><h2>Gestión de pacientes</h2><span class="muted">Alta, búsqueda y acceso a la historia clínica.</span></div>
+          <button class="primary" onclick="openModal()">+ Nuevo paciente</button>
+        </div>
+        <div id="allPatients" class="patient-list" style="margin-top:15px"></div>
+      </div>
+    </section>
+
+    <section id="agenda" class="module" style="display:none">
+      <div class="card">
+        <h2>Agenda de hoy</h2>
+        <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="field"><label>09:00</label><strong>María Fernanda Rojas</strong><br><span class="status">Confirmada</span></div>
+          <div class="field"><label>10:30</label><strong>Carlos Méndez</strong><br><span class="badge">En espera</span></div>
+          <div class="field"><label>12:00</label><strong>Lucía Vargas</strong><br><span class="status">Reservada</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reports" class="module" style="display:none">
+      <div class="card">
+        <h2>Reportes y analítica</h2>
+        <div class="info-grid">
+          <div class="field"><label>Atenciones este mes</label><strong>86</strong></div>
+          <div class="field"><label>Diagnóstico frecuente</label><strong>Caries dental</strong></div>
+          <div class="field"><label>Ausentismo</label><strong>7.4%</strong></div>
+          <div class="field"><label>Tratamientos finalizados</label><strong>31</strong></div>
+          <div class="field"><label>Radiografías registradas</label><strong>54</strong></div>
+          <div class="field"><label>Consentimientos</label><strong>91%</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="security" class="module" style="display:none">
+      <div class="card">
+        <h2>Seguridad, roles y auditoría</h2>
+        <div class="two">
+          <div>
+            <div class="field"><label>Administrador</label><strong>Acceso total</strong></div><br>
+            <div class="field"><label>Odontólogo</label><strong>Historia clínica + tratamientos</strong></div><br>
+            <div class="field"><label>Recepción</label><strong>Contacto + agenda</strong></div>
+          </div>
+          <div>
+            <h3>Últimos movimientos</h3>
+            <div class="timeline">
+              <div class="event"><div class="date">14/09/2026 · 20:31</div>Odontólogo consultó expediente #D-1042</div>
+              <div class="event"><div class="date">14/09/2026 · 19:52</div>Recepción confirmó una cita</div>
+              <div class="event"><div class="date">14/09/2026 · 18:14</div>Se adjuntó una radiografía</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="record" style="display:none">
+      <div class="card">
+        <div class="record-head">
+          <img id="recordPhoto" class="record-photo" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" alt="Paciente ficticio">
+          <div style="flex:1">
+            <div class="muted">EXPEDIENTE <span id="recordId">D-1042</span></div>
+            <h2 id="recordName">María Fernanda Rojas</h2>
+            <span class="status">Paciente activa</span>
+          </div>
+          <div class="actions">
+            <button class="secondary" onclick="showToast('Ficha preparada para impresión')">🖨 Imprimir</button>
+            <button class="primary" onclick="openModal()">+ Nueva atención</button>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="active" onclick="tab(this,'datos')">Identificación</button>
+          <button onclick="tab(this,'anamnesis')">Anamnesis</button>
+          <button onclick="tab(this,'examen')">Examen / Odontograma</button>
+          <button onclick="tab(this,'imagenes')">Imágenes</button>
+          <button onclick="tab(this,'evolucion')">Evolución SOAP</button>
+          <button onclick="tab(this,'documentos')">Consentimientos</button>
+        </div>
+
+        <div id="datos" class="tab active">
+          <h3>Datos de identificación</h3>
+          <div class="info-grid">
+            <div class="field"><label>Nombre completo</label><strong id="fName">María Fernanda Rojas</strong></div>
+            <div class="field"><label>Cédula / CI</label><strong>7.654.321 TJ</strong></div>
+            <div class="field"><label>Fecha de nacimiento</label><strong>18/05/1997</strong></div>
+            <div class="field"><label>Sexo / género</label><strong>Femenino</strong></div>
+            <div class="field"><label>Teléfono</label><strong>+591 7XX XXX XX</strong></div>
+            <div class="field"><label>Correo</label><strong>paciente.demo@email.com</strong></div>
+            <div class="field"><label>Dirección</label><strong>Tarija, Bolivia</strong></div>
+            <div class="field"><label>Contacto de emergencia</label><strong>Jorge Rojas · +591 7XX XXX XX</strong></div>
+            <div class="field"><label>Profesional</label><strong>Dra. Marisel Cortez</strong></div>
+          </div>
+        </div>
+
+        <div id="anamnesis" class="tab">
+          <div class="two">
+            <div>
+              <h3>Motivo de consulta</h3>
+              <div class="field">“Dolor ocasional en molar inferior derecho al masticar.”</div>
+              <h3 style="margin-top:16px">Enfermedad actual</h3>
+              <div class="field">Molestia intermitente desde hace aproximadamente 2 semanas.</div>
+            </div>
+            <div>
+              <h3>Antecedentes personales</h3>
+              <div class="field">Sin enfermedades crónicas declaradas. No alergias conocidas. Medicación: ninguna.</div>
+              <h3 style="margin-top:16px">Antecedentes familiares</h3>
+              <div class="field">Sin antecedentes familiares relevantes declarados.</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="examen" class="tab">
+          <div class="info-grid">
+            <div class="field"><label>Presión arterial</label><strong>118 / 76 mmHg</strong></div>
+            <div class="field"><label>Frecuencia cardíaca</label><strong>72 lpm</strong></div>
+            <div class="field"><label>Temperatura</label><strong>36.6 °C</strong></div>
+            <div class="field"><label>Peso</label><strong>61 kg</strong></div>
+            <div class="field"><label>Talla</label><strong>1.64 m</strong></div>
+            <div class="field"><label>IMC</label><strong>22.7</strong></div>
+          </div>
+          <h3 style="margin-top:18px">Odontograma demostrativo</h3>
+          <div class="odontogram" id="odontogram"></div>
+          <div class="alert" style="margin-top:12px">🟠 Ejemplo visual: una pieza marcada puede representar caries o una restauración. En un sistema real, el odontólogo define el diagnóstico y tratamiento.</div>
+        </div>
+
+        <div id="imagenes" class="tab">
+          <div class="two">
+            <div>
+              <h3>Radiografía panorámica</h3>
+              <img class="radio-img" src="https://www.prodent.com.pe/images/especialidades/rehabilitacion-oral-inside.jpg" alt="Radiografía dental de referencia">
+              <div class="muted" style="margin-top:7px">Archivo demo · 14/09/2026 · Panorámica</div>
+            </div>
+            <div>
+              <h3>Observación registrada</h3>
+              <div class="field">“Imagen adjunta para demostración. El informe radiográfico debe ser realizado por el profesional correspondiente.”</div>
+              <br>
+              <button class="secondary" onclick="showToast('Demo: selector de archivos abierto')">📎 Adjuntar imagen</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="evolucion" class="tab">
+          <div class="two">
+            <div>
+              <h3>Última atención · SOAP</h3>
+              <div class="timeline">
+                <div class="event"><div class="date">14/09/2026 · 10:30</div><strong>S — Subjetivo</strong><br>Dolor leve al masticar en sector posterior.</div>
+                <div class="event"><strong>O — Objetivo</strong><br>Sensibilidad localizada. Se solicita imagen complementaria.</div>
+                <div class="event"><strong>A — Apreciación</strong><br>Diagnóstico presuntivo: caries dental. Codificación CIE pendiente de validación profesional.</div>
+                <div class="event"><strong>P — Plan</strong><br>Evaluación radiográfica y definir restauración según hallazgos.</div>
+              </div>
+            </div>
+            <div>
+              <h3>Agregar nota</h3>
+              <textarea id="newNote" placeholder="Escribe una nueva evolución..."></textarea>
+              <button class="primary" style="margin-top:8px" onclick="addNote()">Guardar evolución</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="documentos" class="tab">
+          <div class="grid">
+            <div class="field"><strong>✅ Consentimiento informado</strong><br><span class="muted">Firmado · 14/09/2026</span></div>
+            <div class="field"><strong>✅ Autorización para tratamiento</strong><br><span class="muted">Firmado · 14/09/2026</span></div>
+            <div class="field"><strong>📄 Informe / documento externo</strong><br><span class="muted">1 archivo PDF adjunto</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2>Nuevo registro</h2>
+    <p class="muted">Demo rápida para mostrar cómo podría abrirse una nueva atención.</p>
+    <div class="grid">
+      <input type="text" placeholder="Nombre completo">
+      <input type="text" placeholder="Cédula / CI">
+      <select><option>Motivo de consulta</option><option>Control</option><option>Dolor dental</option><option>Limpieza</option><option>Ortodoncia</option></select>
+      <textarea placeholder="Notas iniciales..."></textarea>
+      <button class="primary" onclick="closeModal();showToast('Registro guardado en modo DEMO')">Guardar ficha</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const patients=[
+ {id:'D-1042',name:'María Fernanda Rojas',initials:'MR',status:'Activa',photo:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80',reason:'Dolor molar inferior derecho'},
+ {id:'D-1043',name:'Carlos Méndez',initials:'CM',status:'Activo',photo:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',reason:'Control preventivo'},
+ {id:'D-1044',name:'Lucía Vargas',initials:'LV',status:'Activa',photo:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80',reason:'Limpieza dental'},
+ {id:'D-1045',name:'Andrés Castillo',initials:'AC',status:'Activo',photo:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',reason:'Evaluación de ortodoncia'}
+];
+
+function patientHTML(p){
+ return `<div class="patient" onclick="openRecord('${p.id}')">
+   <img class="pavatar" src="${p.photo}" style="object-fit:cover" alt="">
+   <div style="flex:1"><strong>${p.name}</strong><div class="muted">${p.id} · ${p.reason}</div></div>
+   <span class="status">${p.status}</span>
+ </div>`;
+}
+function renderPatients(list=patients){
+ document.getElementById('patientList').innerHTML=list.map(patientHTML).join('');
+ document.getElementById('allPatients').innerHTML=list.map(patientHTML).join('');
+}
+function filterPatients(){
+ const q=document.getElementById('search').value.toLowerCase();
+ renderPatients(patients.filter(p=>(p.name+p.id+p.reason).toLowerCase().includes(q)));
+}
+function openRecord(id){
+ const p=patients.find(x=>x.id===id)||patients[0];
+ document.getElementById('dashboard').style.display='none';
+ document.getElementById('patients').style.display='none';
+ document.getElementById('agenda').style.display='none';
+ document.getElementById('reports').style.display='none';
+ document.getElementById('security').style.display='none';
+ document.getElementById('record').style.display='block';
+ document.getElementById('recordName').textContent=p.name;
+ document.getElementById('fName').textContent=p.name;
+ document.getElementById('recordId').textContent=p.id;
+ document.getElementById('recordPhoto').src=p.photo;
+ document.getElementById('pageTitle').textContent='Expediente clínico · '+p.name;
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function showModule(btn,id){
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+ document.querySelectorAll('.module').forEach(m=>m.style.display='none');
+ document.getElementById('record').style.display='none';
+ document.getElementById(id).style.display='block';
+ const titles={dashboard:'Ficha clínica digital',patients:'Gestión de pacientes',agenda:'Agenda',reports:'Reportes y analítica',security:'Seguridad y auditoría'};
+ document.getElementById('pageTitle').textContent=titles[id];
+}
+function tab(btn,id){
+ document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+function openModal(){document.getElementById('modal').classList.add('open')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function showToast(msg){
+ const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+ setTimeout(()=>t.style.display='none',2200);
+}
+function addNote(){
+ const n=document.getElementById('newNote');
+ if(!n.value.trim()){showToast('Escribe una nota primero');return}
+ const box=document.querySelector('#evolucion .timeline');
+ box.insertAdjacentHTML('afterbegin',`<div class="event"><div class="date">Ahora · Demo</div><strong>Nota clínica</strong><br>${n.value.replace(/</g,'&lt;')}</div>`);
+ n.value='';showToast('Evolución agregada');
+}
+const teeth=[18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28,48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+document.getElementById('odontogram').innerHTML=teeth.map((n,i)=>`<div class="tooth ${i===5||i===21?'caries':i===10||i===27?'restored':''}" onclick="this.classList.toggle('caries')" title="Pieza ${n}">${n}</div>`).join('');
+renderPatients();
+</script>
+</body>
+</html>

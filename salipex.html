@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALÍPEX - Origen de Sal | Planta Industrializadora</title>
+    
+    <!-- Aproximación de Tipografías a Google Fonts (Geist -> Inter, Reservation Wide -> Syncopate) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === VARIABLES DE MARCA Y COLORIMETRÍA === */
+        :root {
+            /* 60% Dominante - Fondos y espacios */
+            --gris-sal: #e2e6ef; 
+            /* 30% Secundario - Bloques, Navbar, Footer, Tarjetas */
+            --azul-altiplano: #2b3c4d; 
+            /* 10% Acento - Botones, Textos de alto contraste, Títulos */
+            --azul-profundo: #22222d; 
+            /* Color de apoyo para bordes sutiles */
+            --gris: #cececd; 
+            
+            --font-principal: 'Syncopate', sans-serif; /* Simula Reservation Wide */
+            --font-cuerpo: 'Inter', sans-serif; /* Simula Geist */
+            
+            --transition-speed: 0.4s;
+        }
+
+        /* === RESET Y ESTILOS BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-cuerpo);
+            background-color: var(--gris-sal);
+            color: var(--azul-profundo);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: var(--font-principal);
+            text-transform: uppercase;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* === COMPONENTES === */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--azul-profundo);
+            color: var(--gris-sal);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform 0.2s;
+            text-align: center;
+            font-family: var(--font-principal);
+            font-size: 0.8rem;
+        }
+        .btn:hover {
+            background-color: var(--azul-altiplano);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--azul-profundo);
+            color: var(--azul-profundo);
+        }
+        .btn-outline:hover {
+            background-color: var(--azul-profundo);
+            color: var(--gris-sal);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--azul-profundo);
+        }
+
+        /* === NAVEGACIÓN === */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: var(--azul-altiplano);
+            color: var(--gris-sal);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo img { height: 40px; filter: brightness(0) invert(1); /* Para que resalte en azul */ }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links li:hover, .nav-links li.active-link {
+            color: var(--gris);
+        }
+
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+
+        /* === SPA PAGES & ANIMATIONS === */
+        #app-container {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px - 200px);
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            animation: fadeIn var(--transition-speed) forwards;
+        }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === ESTRUCTURA DE SECCIONES === */
+        section { padding: 4rem 5%; }
+        .bg-alt { background-color: var(--azul-altiplano); color: var(--gris-sal); }
+        .bg-alt .section-title { color: var(--gris-sal); }
+
+        /* HERO INICIO */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(34, 34, 45, 0.7), rgba(34, 34, 45, 0.7)), url('image_00f12f.jpg') center/cover;
+            color: var(--gris-sal);
+            padding: 0 20px;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* GRID GENÉRICO (Productos, Blog) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: #fff; /* Fondo limpio de contraste */
+            border: 1px solid var(--gris);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 1.5rem; text-align: center; color: var(--azul-altiplano); }
+        .card-body h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--azul-profundo); }
+
+        /* TIMELINE PROCESOS */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-item {
+            padding: 20px;
+            border-left: 4px solid var(--azul-profundo);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            background: var(--azul-altiplano);
+            border-radius: 50%;
+            left: -10px; top: 25px;
+        }
+
+        /* FORMULARIO CONTACTO */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px;
+            border: 1px solid var(--gris);
+            border-radius: 4px;
+            font-family: var(--font-cuerpo);
+        }
+        .contact-info p { margin-bottom: 1rem; }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--azul-profundo);
+            color: var(--gris-sal);
+            padding: 3rem 5% 1rem;
+            text-align: center;
+        }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; text-align: left; }
+        .footer-grid h4 { margin-bottom: 1rem; color: var(--gris); }
+        
+        /* WHATSAPP FLOTANTE */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--azul-profundo);
+            color: var(--gris-sal);
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: var(--azul-altiplano);
+        }
+
+        /* RESPONSIVE MÓVIL */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px; left: 0; width: 100%;
+                background-color: var(--azul-altiplano);
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+            }
+            .nav-links.nav-active { max-height: 300px; }
+            .nav-links li { padding: 15px 0; width: 100%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+            .menu-toggle { display: block; }
+            
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav>
+        <div class="logo">
+            <img src="image_01568f.png" alt="SALÍPEX Logo">
+        </div>
+        <div class="menu-toggle" id="mobile-menu">☰</div>
+        <ul class="nav-links" id="nav-links">
+            <li class="active-link" onclick="navigate('inicio')">Inicio</li>
+            <li onclick="navigate('nosotros')">Nosotros</li>
+            <li onclick="navigate('productos')">Productos</li>
+            <li onclick="navigate('procesos')">Procesos</li>
+            <li onclick="navigate('blog')">Blog y Recetas</li>
+            <li onclick="navigate('contacto')">Contacto</li>
+        </ul>
+    </nav>
+
+    <!-- CONTENEDOR SPA -->
+    <div id="app-container">
+
+        <!-- ============================================== -->
+        <!-- PÁGINA 1: INICIO -->
+        <!-- ============================================== -->
+        <div id="inicio" class="page active">
+            <!-- Sección 1: Hero -->
+            <section class="hero reveal" style="padding: 0;">
+                <div>
+                    <h1>SALÍPEX - ORIGEN DE SAL</h1>
+                    <p>Sal boliviana elaborada con un proceso 100% en seco, sin uso de agua. Calidad y pureza natural garantizada.</p>
+                    <button class="btn" onclick="navigate('productos')">Ver Productos</button>
+                    <button class="btn btn-outline" style="color:white; border-color:white;" onclick="navigate('contacto')">Contactar</button>
+                </div>
+            </section>
+            
+            <!-- Sección 2: Presentación -->
+            <section class="reveal">
+                <h2 class="section-title">El Salar Más Grande del Mundo</h2>
+                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <p>Desde el corazón de Colcha "K", Potosí, extraemos la mejor sal de Bolivia. Nuestro proceso innovador preserva la pureza absoluta de los cristales, ofreciendo un producto superior tanto para el consumo animal como humano, y con un compromiso total hacia el medio ambiente.</p>
+                </div>
+            </section>
+
+            <!-- Sección 3: Productos Destacados -->
+            <section class="bg-alt reveal">
+                <h2 class="section-title">Nuestros Productos</h2>
+                <div class="grid">
+                    <div class="card">
+                        <img src="image_00f12f.jpg" alt="Sal Mineral SALIPEX">
+                        <div class="card-body">
+                            <h3>Sal Mineral Ganado</h3>
+                            <p>Bolsa 25 kg. Proceso en seco.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="image_00f12f.jpg" alt="Sal Fina SALIPEX">
+                        <div class="card-body">
+                            <h3>Sal Fina</h3>
+                            <p>Envase 1 kg. Pureza natural.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="image_00f12f.jpg" alt="Sal Parrillera SALIPEX">
+                        <div class="card-body">
+                            <h3>Sal Parrillera</h3>
+                            <p>Ideal para cortes especiales.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn" onclick="navigate('productos')">Catálogo Completo</button>
+                </div>
+            </section>
+
+            <!-- Sección 4: Calidad -->
+            <section class="reveal">
+                <div class="contact-wrapper" style="align-items: center; background: transparent; box-shadow: none;">
+                    <div>
+                        <h2 class="brand-font" style="color: var(--azul-profundo)">Innovación y Calidad</h2>
+                        <p style="margin-top: 1rem;">Nuestra planta industrializadora utiliza tecnología de vanguardia para asegurar que cada grano de sal que llega a tu mesa o a tu industria cumpla con los más altos estándares nacionales e internacionales. Sin uso de agua, impacto ambiental cero.</p>
+                    </div>
+                    <div>
+                        <img src="image_0153c7.png" alt="Isotipo SALIPEX" style="max-width: 250px; margin: 0 auto;">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- PÁGINA 2: NOSOTROS -->
+        <!-- ============================================== -->
+        <div id="nosotros" class="page">
+            <section class="reveal">
+                <h2 class="section-title">Nuestra Historia</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto;">SALÍPEX nace de la visión de industrializar responsablemente la riqueza del altiplano boliviano. Ubicados en Vinto "K", Ciudad Potosí, nos consolidamos como una marca boliviana de sal, con una identidad fuerte, moderna y comprometida con la excelencia industrial.</p>
+            </section>
+
+            <section class="bg-alt reveal">
+                <div class="grid">
+                    <div>
+                        <h3 class="brand-font" style="margin-bottom: 1rem;">Misión</h3>
+                        <p>Proveer sal de la más alta pureza a nivel nacional, garantizando procesos industriales sustentables que beneficien a la industria, ganadería y hogares bolivianos.</p>
+                    </div>
+                    <div>
+                        <h3 class="brand-font" style="margin-bottom: 1rem;">Visión</h3>
+                        <p>Posicionarnos como la planta industrializadora de sal líder en Bolivia, reconocida por nuestro procesamiento 100% en seco y calidad garantizada.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="reveal">
+                <h2 class="section-title">Nuestras Instalaciones</h2>
+                <div class="grid">
+                    <div class="card" style="background-color: var(--gris); height: 200px; display:flex; align-items:center; justify-content:center;">[Fotografía Planta Industrial]</div>
+                    <div class="card" style="background-color: var(--gris); height: 200px; display:flex; align-items:center; justify-content:center;">[Fotografía Almacenamiento]</div>
+                    <div class="card" style="background-color: var(--gris); height: 200px; display:flex; align-items:center; justify-content:center;">[Fotografía Salar]</div>
+                </div>
+            </section>
+
+            <section class="reveal" style="text-align: center;">
+                <h2 class="brand-font" style="color: var(--azul-profundo);">Únete a nuestra red de distribuidores</h2>
+                <p style="margin: 1rem 0;">Buscamos socios comerciales en toda Bolivia.</p>
+                <button class="btn" onclick="navigate('contacto')">Quiero ser distribuidor</button>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- PÁGINA 3: PRODUCTOS -->
+        <!-- ============================================== -->
+        <div id="productos" class="page">
+            <section class="reveal">
+                <h2 class="section-title">Catálogo de Productos</h2>
+                <p style="text-align: center; margin-bottom: 3rem;">Conoce nuestra línea desarrollada para satisfacer las exigencias del consumo humano y requerimientos agropecuarios.</p>
+                
+                <div class="grid">
+                    <!-- Producto 1 -->
+                    <div class="card">
+                        <img src="image_00f12f.jpg" alt="Sal Mineral 25kg">
+                        <div class="card-body">
+                            <h3>Sal Mineral para Ganado</h3>
+                            <p style="margin-bottom: 1rem; font-size: 0.9rem;">Presentación industrial de 25kg, ideal para suplementación agropecuaria.</p>
+                            <button class="btn" style="width: 100%;">Ficha Técnica</button>
+                        </div>
+                    </div>
+                    <!-- Producto 2 -->
+                    <div class="card">
+                        <img src="image_00f12f.jpg" alt="Sal Fina 1kg">
+                        <div class="card-body">
+                            <h3>Sal Fina Yodada</h3>
+                            <p style="margin-bottom: 1rem; font-size: 0.9rem;">Bolsa de 1kg. Perfecta para la mesa y cocina diaria. Pureza garantizada.</p>
+                            <button class="btn" style="width: 100%;">Ficha Técnica</button>
+                        </div>
+                    </div>
+                    <!-- Producto 3 -->
+                    <div class="card">
+                        <img src="image_00f12f.jpg" alt="Sal Parrillera">
+                        <div class="card-body">
+                            <h3>Sal Parrillera</h3>
+                            <p style="margin-bottom: 1rem; font-size: 0.9rem;">Envase dosificador. Granulometría especial para carnes y parrillas.</p>
+                            <button class="btn" style="width: 100%;">Ficha Técnica</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-alt reveal">
+                <h2 class="section-title">Ventas al Por Mayor</h2>
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 2rem;">Ofrecemos precios competitivos y logística de entrega para mayoristas e industrias.</p>
+                    <a href="https://wa.me/59161592315" target="_blank" class="btn" style="background-color: var(--gris-sal); color: var(--azul-profundo);">Cotizar por WhatsApp</a>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- PÁGINA 4: PROCESOS Y CALIDAD -->
+        <!-- ============================================== -->
+        <div id="procesos" class="page">
+            <section class="reveal">
+                <h2 class="section-title">Nuestro Proceso Industrial</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto;">Nos diferenciamos por aplicar un sistema de procesamiento 100% en seco, eliminando el uso de agua y conservando las propiedades originales de la sal de Lípez.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <h3 class="brand-font">1. Extracción y Recepción</h3>
+                        <p>Obtención de la materia prima directamente del Salar de Uyuni (Colcha K), seleccionando cristales de alta pureza.</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <h3 class="brand-font">2. Procesamiento en Seco</h3>
+                        <p>Trituración y clasificación granulométrica mediante tecnología sin uso hídrico, protegiendo el ecosistema.</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <h3 class="brand-font">3. Yodación y Aditivos</h3>
+                        <p>Incorporación precisa de yodo (y otros minerales en líneas ganaderas) cumpliendo normativas sanitarias bolivianas.</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <h3 class="brand-font">4. Envasado Automatizado</h3>
+                        <p>Empaquetado aséptico en formatos de 1kg, dosificadores y sacos industriales de 25kg.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-alt reveal" style="text-align: center;">
+                <h2 class="section-title">Control de Calidad</h2>
+                <p>Nuestra planta cuenta con laboratorios internos que monitorean lote a lote la pureza, humedad y concentración de yodo, garantizando que el sello SALÍPEX sea sinónimo de confianza.</p>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- PÁGINA 5: RECETAS Y BLOG -->
+        <!-- ============================================== -->
+        <div id="blog" class="page">
+            <section class="reveal">
+                <h2 class="section-title">Recetas con Salípex</h2>
+                <div class="grid">
+                    <div class="card">
+                        <div style="height:200px; background:var(--gris); display:flex; align-items:center; justify-content:center;">[Foto Bife]</div>
+                        <div class="card-body">
+                            <h3>Bife de Chorizo a la Parrilla</h3>
+                            <p style="font-size:0.8rem; color:var(--gris);">Tiempo: 30 min | Usa: Sal Parrillera</p>
+                            <p style="margin-top: 1rem;">El secreto de un buen corte está en el sellado y en la granulometría de la sal...</p>
+                            <button class="btn btn-outline" style="margin-top:1rem; width:100%; padding: 8px;">Leer Receta</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div style="height:200px; background:var(--gris); display:flex; align-items:center; justify-content:center;">[Foto Pan]</div>
+                        <div class="card-body">
+                            <h3>Pan Casero de Masa Madre</h3>
+                            <p style="font-size:0.8rem; color:var(--gris);">Tiempo: 12 hrs | Usa: Sal Fina</p>
+                            <p style="margin-top: 1rem;">La proporción exacta de sal fina Salípex regula la fermentación de tu pan...</p>
+                            <button class="btn btn-outline" style="margin-top:1rem; width:100%; padding: 8px;">Leer Receta</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-alt reveal">
+                <h2 class="section-title">Blog Industrial y Novedades</h2>
+                <div class="grid">
+                    <div class="card" style="background:var(--gris-sal);">
+                        <div class="card-body" style="text-align:left;">
+                            <h3 style="color:var(--azul-altiplano)">¿Por qué es importante el proceso en seco?</h3>
+                            <p style="font-size:0.9rem; margin-top:0.5rem; color:var(--azul-profundo)">El cuidado del ecosistema del salar requiere innovación. Nuestro método ahorra miles de litros de agua...</p>
+                        </div>
+                    </div>
+                    <div class="card" style="background:var(--gris-sal);">
+                        <div class="card-body" style="text-align:left;">
+                            <h3 style="color:var(--azul-altiplano)">Beneficios de la Sal Mineral en Bovinos</h3>
+                            <p style="font-size:0.9rem; margin-top:0.5rem; color:var(--azul-profundo)">La suplementación mineral correcta asegura ganancia de peso y salud en tu hato ganadero...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- PÁGINA 6: CONTACTO -->
+        <!-- ============================================== -->
+        <div id="contacto" class="page">
+            <section class="reveal">
+                <h2 class="section-title">Contacto Comercial</h2>
+                
+                <div class="contact-wrapper">
+                    <!-- Información -->
+                    <div class="contact-info">
+                        <h3 class="brand-font" style="margin-bottom: 1.5rem; color: var(--azul-altiplano);">Oficinas y Planta</h3>
+                        <p><strong>📍 Planta Industrial:</strong> Colcha "K", Potosí, Bolivia.</p>
+                        <p><strong>📍 Oficina Venta:</strong> Vinto "K", Ciudad Potosí, Potosí, Bolivia.</p>
+                        <p><strong>📞 Teléfono / WhatsApp:</strong> +591 61592315</p>
+                        <p><strong>✉️ Correo:</strong> rrhh@salipex.com</p>
+                        <p><strong>🌐 Web:</strong> www.salipex.com</p>
+                        
+                        <h3 class="brand-font" style="margin: 2rem 0 1rem 0; color: var(--azul-altiplano);">Horario de Atención</h3>
+                        <p>Lunes a Viernes: 08:30 a 17:30</p>
+                        <p>Sábados: 09:00 a 13:00</p>
+                    </div>
+                    
+                    <!-- Formulario -->
+                    <div class="contact-form">
+                        <form onsubmit="event.preventDefault(); alert('Mensaje enviado. Nos contactaremos pronto.');">
+                            <div class="form-group">
+                                <label>Nombre / Empresa</label>
+                                <input type="text" required placeholder="Ej. Juan Pérez - Distribuidora Sur">
+                            </div>
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" required placeholder="correo@ejemplo.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="tel" required placeholder="+591...">
+                            </div>
+                            <div class="form-group">
+                                <label>Motivo de Consulta</label>
+                                <textarea rows="4" required placeholder="Deseo cotizar..."></textarea>
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%;">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="image_01568f.png" alt="SALIPEX" style="height: 50px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
+                <p style="font-size: 0.9rem;">Origen de Sal. Proceso 100% en seco.</p>
+            </div>
+            <div>
+                <h4>Enlaces Rápidos</h4>
+                <ul style="font-size: 0.9rem; line-height: 2;">
+                    <li><a href="#" onclick="navigate('inicio'); return false;">Inicio</a></li>
+                    <li><a href="#" onclick="navigate('productos'); return false;">Catálogo</a></li>
+                    <li><a href="#" onclick="navigate('procesos'); return false;">Calidad</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <ul style="font-size: 0.9rem; line-height: 2;">
+                    <li>Vinto "K", Potosí</li>
+                    <li>+591 61592315</li>
+                    <li>rrhh@salipex.com</li>
+                </ul>
+            </div>
+        </div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; font-size: 0.8rem; color: var(--gris);">
+            &copy; 2026 SALÍPEX - Planta Industrializadora de Sal. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/59161592315" class="whatsapp-float" target="_blank" title="Contactar por WhatsApp" style="background-color: var(--azul-altiplano);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+        </svg>
+    </a>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Funcionalidad de navegación SPA (Single Page Application)
+        function navigate(pageId) {
+            // Cerrar menú móvil si está abierto
+            const navLinks = document.getElementById('nav-links');
+            if (navLinks.classList.contains('nav-active')) {
+                navLinks.classList.remove('nav-active');
+            }
+
+            // Manejo de clases activas en Navbar
+            const links = document.querySelectorAll('.nav-links li');
+            links.forEach(link => link.classList.remove('active-link'));
+            event.target.classList.add('active-link');
+
+            // Transición de Páginas
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.style.opacity = '0'; // Inicio del Fade Out
+                setTimeout(() => {
+                    page.classList.remove('active');
+                    if (page.id === pageId) {
+                        page.classList.add('active');
+                        // Forzar reflow
+                        void page.offsetWidth; 
+                        page.style.opacity = '1'; // Fade In
+                    }
+                }, 400); // Coincide con --transition-speed
+            });
+            
+            // Scroll arriba suave
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Menú Móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-active');
+        });
+
+        // Intersection Observer para Animaciones de Revelado (Scroll)
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
